@@ -1,19 +1,24 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
 project(persona-x CXX)
 
+# Add project-specific CMake configs
 set(CMAKE_MODULE_PATH
     "${PROJECT_SOURCE_DIR}/cmake"
 )
 
+# Set C++17 standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(OpenGL_GL_PREFERENCE GLVND)
 
-find_package(SFML 2 COMPONENTS window system REQUIRED)
+find_package(SFML COMPONENTS graphics system)
 find_package(OpenGL REQUIRED)
 
 include_directories(
-    ${SFML_INCLUDE_DIRS}
-    ${OPENGL_INCLUDE_DIRS}
+    ${SFML_INCLUDE_DIR}
+    ${OPENGL_INCLUDE_DIR}
 )
 
 link_directories(
@@ -24,6 +29,6 @@ add_definitions(
     ${OPENGL_CFLAGS_OTHER}
 )
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp game.cpp)
 
-target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} sfml-graphics ${OPENGL_LIBRARIES})
