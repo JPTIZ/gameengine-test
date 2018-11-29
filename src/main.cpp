@@ -3,6 +3,8 @@
 #include "game.h"
 #include "scenes.h"
 
+// TODO: Fazer isso tudo ser chamado por um script em Python.
+
 void scene_loop(game::Game& game) {
     using namespace px::scenes;
     auto scene = std::make_unique<SceneTitle>(game);

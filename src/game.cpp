@@ -2,6 +2,7 @@
 #include "graphics.h"
 #include "project/vocab.h"
 
+#include <iostream>
 #include <optional>
 
 namespace {
@@ -36,10 +37,25 @@ void Game::close() {
 void Game::update() {
     while (auto _event = next_event(window)) {
         auto event = *_event;
-        if (event.type == sf::Event::Closed) {
-            close();
+        switch (event.type) {
+            case sf::Event::Closed:
+                close();
+                break;
+            case sf::Event::Resized:
+                window.setView(
+                    sf::View{{
+                        0, 0,
+                        float(event.size.width),
+                        float(event.size.height)
+                    }}
+                );
+                break;
+            default:
+                break;
         }
     }
+
+    _input.update();
 }
 
 void Game::display() {

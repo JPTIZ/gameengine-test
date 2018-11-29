@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(persona-x CXX)
+project(persona_x CXX)
 
 # Add project-specific CMake configs
 set(CMAKE_MODULE_PATH
@@ -29,6 +29,22 @@ add_definitions(
     ${OPENGL_CFLAGS_OTHER}
 )
 
-add_executable(${PROJECT_NAME} main.cpp game.cpp)
+find_package(pybind11 REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} sfml-graphics ${OPENGL_LIBRARIES})
+add_library(${PROJECT_NAME} MODULE
+    pywrap.cpp
+    game.cpp
+    scenes.cpp
+    graphics/cache.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    pybind11::module
+    sfml-graphics
+    ${OPENGL_LIBRARIES}
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    PREFIX "${PYTHON_MODULE_PREFIX}"
+    SUFFIX "${PYTHON_MODULE_EXTENSION}"
+)

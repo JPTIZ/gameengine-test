@@ -1,10 +1,14 @@
 #ifndef PERSONA_X_GAME_H
 #define PERSONA_X_GAME_H
 
-#include <SFML/Graphics.hpp>
 #include <functional>
 #include <memory>
 #include <vector>
+
+#include <SFML/Graphics.hpp>
+
+#include "game/input.h"
+#include "graphics/cache.h"
 
 namespace game {
 
@@ -28,6 +32,22 @@ public:
         return _sprites;
     }
 
+    auto& cache() {
+        return _cache;
+    }
+
+    const auto& cache() const {
+        return _cache;
+    }
+
+    auto& input() {
+        return _input;
+    }
+
+    const auto& input() const {
+        return _input;
+    }
+
     void start();
     void update();
     void close();
@@ -36,9 +56,11 @@ public:
 
 private:
     bool _running = false;
-    sf::RenderWindow window;
     GameLoop _gameloop;
+    sf::RenderWindow window;
     std::vector<sf::Sprite*> _sprites;
+    graphics::Cache _cache;
+    input::Input _input;
 };
 
 }
